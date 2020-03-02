@@ -7,7 +7,6 @@ resource "aws_autoscaling_group" "workers_launch_template" {
   max_size                = "${lookup(var.worker_groups_launch_template[count.index], "asg_max_size", local.workers_group_defaults["asg_max_size"])}"
   min_size                = "${lookup(var.worker_groups_launch_template[count.index], "asg_min_size", local.workers_group_defaults["asg_min_size"])}"
   force_delete            = "${lookup(var.worker_groups_launch_template[count.index], "asg_force_delete", local.workers_group_defaults["asg_force_delete"])}"
-  target_group_arns       = ["${compact(split(",", coalesce(lookup(var.worker_groups_launch_template[count.index], "target_group_arns", ""), local.workers_group_defaults["target_group_arns"])))}"]
   service_linked_role_arn = "${lookup(var.worker_groups_launch_template[count.index], "service_linked_role_arn", local.workers_group_defaults["service_linked_role_arn"])}"
   vpc_zone_identifier     = ["${split(",", coalesce(lookup(var.worker_groups_launch_template[count.index], "subnets", ""), local.workers_group_defaults["subnets"]))}"]
   protect_from_scale_in   = "${lookup(var.worker_groups_launch_template[count.index], "protect_from_scale_in", local.workers_group_defaults["protect_from_scale_in"])}"
